@@ -1,27 +1,46 @@
+require('dotenv').config();
 const express = require("express");
-const fs = require("fs");
 const path = require("path");
+const { refreshMediaCache, getMediaFromCache } = require("./cacheService");
 
 const app = express();
 const PORT = 3000;
-const MEDIA_DIR = path.join(__dirname, "media/journal");
 
-app.use(express.static(path.join(__dirname, "public")));  // Supposons que ton index.html se trouve dans /public
-app.use("/media", express.static("media")); // Sert les fichiers médias depuis /media
+initializeServer();
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+async function initializeServer() {
+    try {
+        console.log("🔄 Mise à jour du cache depuis S3...");
+        await refreshMediaCache();
+        setupRoutes();
+        startServer();
+    } catch (error) {
+        console.error("❌ Erreur lors de l'initialisation du serveur :", error);
+        process.exit(1); // Arrête le processus en cas d'échec critique
+    }
+}
 
-app.get("/api/media", (req, res) => {
-    fs.readdir(MEDIA_DIR, (err, files) => {
-        if (err) {
-            return res.status(500).json({ error: "Impossible de lire le dossier" });
-        }
-        res.json(files);
+function setupRoutes() {
+    app.get("/api/media", serveMediaCache);
+    app.use(express.static(getPublicDirectory()));
+    app.get("/", serveHomePage);
+}
+
+function serveMediaCache(req, res) {
+    const mediaList = getMediaFromCache();
+    res.json(mediaList);
+}
+
+function serveHomePage(req, res) {
+    res.sendFile(path.join(getPublicDirectory(), "index.html"));
+}
+
+function getPublicDirectory() {
+    return path.join(__dirname, "public");
+}
+
+function startServer() {
+    app.listen(PORT, () => {
+        console.log(`✅ Serveur démarré sur http://localhost:${PORT}`);
     });
-});
-
-app.listen(PORT, () => {
-    console.log(`Serveur démarré sur http://localhost:${PORT}`);
-});
+}
