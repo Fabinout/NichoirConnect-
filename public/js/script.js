@@ -81,7 +81,7 @@ function createMediaElement(media, date) {
     }
     if (media.key.endsWith(".mp4")) {
         return `
-            <video controls width="100%">
+           <video controls width="100%"  preload="none">
                 <source src="${media.url}" type="video/mp4">
                 Votre navigateur ne supporte pas la lecture de vidéos.
             </video>`;
