@@ -33,3 +33,64 @@ nav a {
 nav a:hover {
     background: rgba(139, 69, 19, 1);
 }
+
+/* Mise en page de la galerie */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gallery figcaption {
+    font-style: italic;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* Section vidéo */
+.video {
+    text-align: center;
+    padding: 20px;
+}
+
+.video video {
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.intro {
+    background-color: #FAF5E6;
+    color: #333;
+    border: 2px solid #8B4513;
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.intro h2 {
+    font-family: 'Georgia', serif;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #8B4513;
+}
+
+.intro p {
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+    margin: 10px 0;
+}
