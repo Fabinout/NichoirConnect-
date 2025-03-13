@@ -1,190 +1,35 @@
-:root {
-    --font-body: Arial, sans-serif;
-    --bg-body: #f4f4f4;
-    --bg-header: #2c3e50;
-    --txt-white: white;
-    --txt-primary: #007BFF;
-    --txt-primary-hover: #0056b3;
-    --bg-container: #f9f9f9;
-    --shadow-light: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    --border-color: #ddd;
-    --gap-default: 10px;
-}
-
-body {
-    font-family: var(--font-body);
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-body);
-    text-align: center;
-}
-
 header {
-    background-color: var(--bg-header);
-    color: var(--txt-white);
+    background: url('https://www.toptal.com/designers/subtlepatterns/uploads/wood_pattern.png') center/20%;
+    color: white;
+    text-align: center;
     padding: 20px;
+    border-bottom: 5px solid #8B4513;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-nav a {
-    color: var(--txt-white);
-    text-decoration: none;
-    margin: 0 15px;
+h1 {
+    font-family: 'Georgia', serif;
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-main {
-    display: flex;
-    gap: 1rem;
-    margin: 0 auto;
-    padding: 1rem;
-    max-width: 1200px;
-}
-
-img, video {
-    display: block;
-    width: 100%;
-    border-radius: 10px;
-    max-width: 600px;
-}
-
-#journal-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: var(--gap-default);
-}
-
-.journal-entry {
-    background: var(--txt-white);
-    padding: 15px;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: var(--shadow-light);
-    max-width: 600px;
-    text-align: left;
-}
-
-.media-container {
-    justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap-default);
+nav {
     margin-top: 10px;
 }
 
-#navigation {
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background-color: #f0f0f0;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-}
-
-#toc-container {
-    width: 400px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    overflow-y: auto;
-    background-color: var(--bg-container);
-    border-right: 1px solid var(--border-color);
-    padding: 1rem;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
-
-#toc-container h2 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-
-#days-nav {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#days-nav li {
-    margin-bottom: 0.5rem;
-    transition: background-color 0.3s;
-}
-
-#days-nav a {
-    text-decoration: none;
-    color: var(--txt-primary);
-    font-size: 0.9rem;
-    display: inline-block;
-    padding: 0.3rem;
-    border-radius: 3px;
-}
-
-#days-nav a:hover {
-    color: var(--txt-primary-hover);
-    background-color: #eef;
-}
-
-#journal {
-    margin-left: 0;
-    flex: 1;
-    padding: 1rem;
-}
-
-.event-item {
-    margin: 1.5rem 0;
-    padding: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    background-color: #fafafa;
-}
-
-.event-item img {
-    height: auto;
-    margin-top: 1rem;
-}
-
-.page-index #photo-container {
-    margin: 0 auto;
-    text-align: center;
-}
-
-.page-index #photo-container img {
-    margin: 0 auto;
-    display: block;
-}
-
-#toc-container {
-    transition: transform 0.3s ease, visibility 0.3s ease;
-    transform: translateX(-100%);
-    visibility: hidden;
-}
-
-#toc-container.visible {
-    /* Affiche l'aside */
-    transform: translateX(0);
-    visibility: visible;
-}
-
-#toggle-toc {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    border: none;
-    background-color: #007BFF;
+nav a {
     color: white;
-    cursor: pointer;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin: 0 15px;
+    font-weight: bold;
+    padding: 8px 15px;
+    background: rgba(139, 69, 19, 0.8);
     border-radius: 5px;
+    transition: background 0.3s;
 }
 
-@media (min-width: 768px) {
-    #journal {
-        margin-left: 300px;
-    }
-    #toc-container {
-        transform: translateX(0);
-        visibility: visible;
-    }
-
-    #toggle-toc {
-        display: none;
-    }
+nav a:hover {
+    background: rgba(139, 69, 19, 1);
 }
