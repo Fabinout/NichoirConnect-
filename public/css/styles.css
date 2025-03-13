@@ -94,3 +94,189 @@ nav a:hover {
     text-align: justify;
     margin: 10px 0;
 }
+
+/* Conteneur principal */
+main {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background-color: #F5F5F5;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Barre latérale */
+#toc-container {
+    flex: 1;
+    background-color: #FAF5E6;
+    padding: 20px;
+    border: 1px solid #8B4513;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#toc-container h2 {
+    font-family: 'Georgia', serif;
+    font-size: 1.5rem;
+    color: #4B3621;
+    margin-bottom: 10px;
+}
+
+#toc-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+#toc-container li {
+    margin: 10px 0;
+}
+
+#toc-container a {
+    text-decoration: none;
+    color: #8B4513;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+#toc-container a:hover {
+    background-color: #8B4513;
+    color: #fff;
+}
+
+/* Contenu du journal */
+#journal {
+    flex: 3;
+}
+
+#journal h2 {
+    font-family: 'Georgia', serif;
+    font-size: 2rem;
+    color: #4B3621;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#journal-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+/* Style pour une entrée */
+.journal-entry {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border: 1px solid #8B4513;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.journal-entry h3 {
+    font-size: 1.5rem;
+    color: #4B3621;
+    margin-bottom: 10px;
+    font-family: 'Georgia', serif;
+}
+
+.journal-entry p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+.journal-entry .media-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.journal-entry img, .journal-entry video {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#toggle-toc {
+    display: inline-block;
+    background-color: #8B4513;
+    color: #FFF;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background 0.3s;
+}
+
+#toggle-toc:hover {
+    background-color: #5F3310;
+}
+
+.media-container > * {
+    flex: 1 1 auto; /* Éléments flexibles */
+    max-width: 200px; /* Taille maximale sur desktop */
+    height: auto; /* Maintient les proportions */
+}
+
+
+.journal-entry .media-container img:hover,
+.journal-entry .media-container video:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre légère */
+}
+
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #toc-container, #journal {
+        width: 100%;
+    }
+
+    .journal-entry .media-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .journal-entry h3,
+    .journal-entry p {
+        position: sticky;
+        top: 10px;
+        background-color: #FAF5E6;
+        z-index: 10;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+.journal-entry .sticky-container {
+    position: sticky;
+    top: 10px; /* Fixé à 10px du haut */
+    z-index: 10; /* Priorité visuelle */
+    background-color: #FAF5E6;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.journal-entry .sticky-container .date {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.journal-entry .sticky-container .description {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+

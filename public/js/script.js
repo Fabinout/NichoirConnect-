@@ -56,24 +56,42 @@ function renderJournalEntries(groupedMedia, journalData, container) {
 }
 
 function createJournalEntry(date, mediaList, description = "Aucune description disponible.") {
-    const entry = document.createElement("div");
-    entry.classList.add("journal-entry");
-    entry.id = date;
+        const entry = document.createElement("div");
+        entry.classList.add("journal-entry");
+        entry.id = date;
 
-    entry.innerHTML = `
-        <h3>${date}</h3>
-        <p>${description}</p>
-        <div class="media-container"></div>
-    `;
+        // Créer le conteneur sticky pour le titre et la description
+        const stickyContainer = document.createElement("div");
+        stickyContainer.classList.add("sticky-container");
 
-    const mediaContainer = entry.querySelector(".media-container");
-    mediaList.forEach(media => {
-        const mediaElement = createMediaElement(media, date);
-        if (mediaElement) mediaContainer.innerHTML += mediaElement;
-    });
+        // Ajouter le titre (h3) et la description (p) dans le conteneur sticky
+        const title = document.createElement("h3");
+        title.textContent = date;
 
-    return entry;
-}
+        const desc = document.createElement("p");
+        desc.textContent = description;
+
+        stickyContainer.appendChild(title);
+        stickyContainer.appendChild(desc);
+
+        // Ajouter le conteneur sticky à l'entrée de journal
+        entry.appendChild(stickyContainer);
+
+        // Créer et remplir le conteneur des médias
+        const mediaContainer = document.createElement("div");
+        mediaContainer.classList.add("media-container");
+
+        mediaList.forEach(media => {
+            const mediaElement = createMediaElement(media, date);
+            if (mediaElement) mediaContainer.innerHTML += mediaElement;
+        });
+
+        // Ajouter le conteneur des médias à l'entrée de journal
+        entry.appendChild(mediaContainer);
+
+        return entry;
+
+    }
 
 function createMediaElement(media, date) {
     if (media.key.endsWith(".jpg") || media.key.endsWith(".png")) {
@@ -104,4 +122,3 @@ function createNavigationItem(date, description = "Aucune description disponible
     navItem.innerHTML = `<a href="#${date}">${frenchDate} ${shortDescription}</a>`;
     return navItem;
 }
-
