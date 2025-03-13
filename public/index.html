@@ -7,21 +7,18 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="page-index">
-<header>
-    <h1>Bienvenue sur le journal du nichoir 🐦</h1>
-    <p>Suivez l’évolution du nid jour après jour !</p>
-    <nav>
-        <a href="journal.html">Journal</a>
-    </nav>
-</header>
+<div id="header-container"></div>
 <main>
-    <section id="latest">
-        <h2>La nichoire connectée</h2>
-        <div id="photo-container">
-            <img src="../media/images/nichoir.jpg" alt="Mésange devant le nichoir">
-        </div>
-    </section>
+    place holder
 </main>
 <script src="js/script.js"></script>
+<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(header => {
+            document.getElementById('header-container').innerHTML = header;
+        })
+        .catch(error => console.error("Erreur lors du chargement du header :", error));
+</script>
 </body>
 </html>

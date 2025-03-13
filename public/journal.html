@@ -7,13 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="page-journal">
-<header>
-    <h1>Journal des Observations 📅</h1>
-    <nav>
-        <a href="index.html">Accueil</a>
-    </nav>
-</header>
-
+<div id="header-container"></div>
 <main style="display: flex;">
     <aside id="toc-container">
         <button id="toggle-toc">Afficher / Masquer</button>
@@ -30,5 +24,13 @@
 
 
 <script src="js/script.js"></script>
+<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(header => {
+            document.getElementById('header-container').innerHTML = header;
+        })
+        .catch(error => console.error("Erreur lors du chargement du header :", error));
+</script>
 </body>
 </html>
