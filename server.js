@@ -10,8 +10,12 @@ initializeServer();
 
 async function initializeServer() {
     try {
-        console.log("🔄 Mise à jour du cache depuis S3...");
-        await refreshMediaCache();
+        if (process.env.ENABLE_CACHE === 'true') {
+            console.log("🔄 Mise à jour du cache depuis S3...");
+            await refreshMediaCache();
+        } else {
+            console.log("⚠️ Cache désactivé. Aucune mise à jour nécessaire.");
+        }
         setupRoutes();
         startServer();
     } catch (error) {
