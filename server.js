@@ -10,11 +10,12 @@ initializeServer();
 
 async function initializeServer() {
     try {
+        console.log(`ℹ️ Cache activé : ${process.env.ENABLE_CACHE === 'true' ? 'Oui' : 'Non'}`);
         if (process.env.ENABLE_CACHE === 'true') {
             console.log("🔄 Mise à jour du cache depuis S3...");
             await refreshMediaCache();
         } else {
-            console.log("⚠️ Cache désactivé. Aucune mise à jour nécessaire.");
+            console.log("⚠️ Cache désactivé. Les données seront récupérées directement depuis S3.");
         }
         setupRoutes();
         startServer();
@@ -24,6 +25,7 @@ async function initializeServer() {
     }
 }
 
+
 function setupRoutes() {
     app.get("/api/media", serveMediaCache);
     app.use(express.static(getPublicDirectory()));
@@ -31,8 +33,12 @@ function setupRoutes() {
 }
 
 function serveMediaCache(req, res) {
-    const mediaList = getMediaFromCache();
-    res.json(mediaList);
+    getMediaFromCache()
+        .then(mediaList => res.json(mediaList))
+        .catch(error => {
+            console.error("❌ Erreur lors de la récupération des données :", error);
+            res.status(500).json({ error: "Erreur lors de la récupération des données" });
+        });
 }
 
 function serveHomePage(req, res) {

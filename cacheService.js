@@ -61,10 +61,11 @@ function handleError(error) {
     throw error;
 }
 
-function getMediaFromCache() {
+async function getMediaFromCache() {
     if (!isCacheEnabled) {
-        console.log("⚠️ Cache désactivé. Aucune donnée lue depuis le cache.");
-        return [];
+        console.log("⚠️ Cache désactivé. Récupération des informations directement depuis S3...");
+        const files = await fetchS3Files();
+        return mapFilesToSignedUrls(files);
     }
     console.log("📂 Lecture depuis le cache :", cache.keys());
     return cache.get(CACHE_KEY) || [];
