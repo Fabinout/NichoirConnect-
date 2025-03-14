@@ -279,4 +279,19 @@ nav a:hover {
     color: #555;
 }
 
+/* === RESPONSIVE STYLES === */
+@media (max-width: 768px) {
+    #journal-section {
+        flex-direction: column;
+    }
+
+    #toc-container {
+        order: -1;
+        margin-bottom: 20px;
+    }
+
+    #journal {
+        order: 1;
+    }
+}
 
