@@ -1,11 +1,14 @@
 const NodeCache = require("node-cache");
 const { listS3Objects, getSignedUrl } = require("./s3Service");
 
-const CACHE_KEY = 'mediaList';
 const cache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
-
-// Vérifie si le cache est activé
 const isCacheEnabled = process.env.ENABLE_CACHE === 'true';
+
+const YEARS = [2025, 2026];
+
+function cacheKey(year) {
+    return `media_${year}`;
+}
 
 async function refreshMediaCache() {
     if (!isCacheEnabled) {
@@ -13,62 +16,37 @@ async function refreshMediaCache() {
         return;
     }
 
-    try {
-        console.log("🔄 Chargement de médias depuis S3...");
-        const files = await fetchS3Files();
-        if (!files.length) {
-            resetCache();
-            return;
+    for (const year of YEARS) {
+        try {
+            console.log(`🔄 Chargement des médias ${year} depuis S3...`);
+            const files = await listS3Objects(year);
+            if (!files.length) {
+                cache.set(cacheKey(year), []);
+                continue;
+            }
+            const mediaUrls = files.map(file => ({
+                key: file.Key,
+                url: getSignedUrl(year, file.Key),
+            }));
+            cache.set(cacheKey(year), mediaUrls);
+        } catch (error) {
+            console.error(`❌ Erreur lors de la mise à jour du cache ${year} :`, error);
+            throw error;
         }
-
-        const mediaUrls = mapFilesToSignedUrls(files);
-        updateCache(mediaUrls);
-    } catch (error) {
-        console.error("❌ Erreur lors de la mise à jour du cache :", error);
-        handleError(error);
     }
 }
 
-function fetchS3Files() {
-    return listS3Objects();
-}
-
-function mapFilesToSignedUrls(files) {
-    return files.map(file => ({
-        key: file.Key,
-        url: getSignedUrl(file.Key),
-    }));
-}
-
-function updateCache(mediaUrls) {
+async function getMediaFromCache(year) {
     if (!isCacheEnabled) {
-        console.log("⚠️ Cache désactivé. Modification du cache ignorée.");
-        return;
+        console.log(`⚠️ Cache désactivé. Récupération ${year} directement depuis S3...`);
+        const files = await listS3Objects(year);
+        return files.map(file => ({
+            key: file.Key,
+            url: getSignedUrl(year, file.Key),
+        }));
     }
-    cache.set(CACHE_KEY, mediaUrls);
-}
-
-function resetCache() {
-    if (!isCacheEnabled) {
-        console.log("⚠️ Cache désactivé. Réinitialisation ignorée.");
-        return;
-    }
-    cache.set(CACHE_KEY, []);
-}
-
-function handleError(error) {
-    console.error("Erreur lors de la mise à jour du cache :", error);
-    throw error;
-}
-
-async function getMediaFromCache() {
-    if (!isCacheEnabled) {
-        console.log("⚠️ Cache désactivé. Récupération des informations directement depuis S3...");
-        const files = await fetchS3Files();
-        return mapFilesToSignedUrls(files);
-    }
-    console.log("📂 Lecture depuis le cache :", cache.keys());
-    return cache.get(CACHE_KEY) || [];
+    console.log(`📂 Lecture depuis le cache (${year}) :`, cache.keys());
+    return cache.get(cacheKey(year)) || [];
 }
 
 module.exports = {

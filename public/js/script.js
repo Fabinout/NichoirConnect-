@@ -5,8 +5,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!container || !navContainer) return;
 
     try {
-        const journalData = await fetchJson("data/journal.json");
-        const mediaFiles = await fetchJson("/api/media");
+        const journalUrl = document.body.dataset.journalUrl || "data/journal-2026.json";
+        const mediaUrl = document.body.dataset.mediaUrl || "/api/media/2026";
+        const journalData = await fetchJson(journalUrl);
+        const mediaFiles = await fetchJson(mediaUrl);
 
         const groupedMedia = groupMediaByDate(mediaFiles);
 
@@ -78,7 +80,7 @@ function createJournalEntry(date, mediaList, description = "Aucune description d
         entry.appendChild(stickyContainer);
 
         // Créer et remplir le conteneur des médias
-        const mediaContainer = document.createElement("div");
+         const mediaContainer = document.createElement("div");
         mediaContainer.classList.add("media-container");
 
         mediaList.forEach(media => {

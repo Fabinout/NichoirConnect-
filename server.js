@@ -21,22 +21,24 @@ async function initializeServer() {
         startServer();
     } catch (error) {
         console.error("❌ Erreur lors de l'initialisation du serveur :", error);
-        process.exit(1); // Arrête le processus en cas d'échec critique
+        process.exit(1);
     }
 }
 
 
 function setupRoutes() {
-    app.get("/api/media", serveMediaCache);
+    app.get("/api/media/2025", (req, res) => serveMediaCache(2025, res));
+    app.get("/api/media/2026", (req, res) => serveMediaCache(2026, res));
+    app.get("/api/media", (req, res) => serveMediaCache(2026, res));
     app.use(express.static(getPublicDirectory()));
     app.get("/", serveHomePage);
 }
 
-function serveMediaCache(req, res) {
-    getMediaFromCache()
+function serveMediaCache(year, res) {
+    getMediaFromCache(year)
         .then(mediaList => res.json(mediaList))
         .catch(error => {
-            console.error("❌ Erreur lors de la récupération des données :", error);
+            console.error(`❌ Erreur lors de la récupération des données (${year}) :`, error);
             res.status(500).json({ error: "Erreur lors de la récupération des données" });
         });
 }

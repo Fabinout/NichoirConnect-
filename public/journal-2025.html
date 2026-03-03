@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal du Nichoir 2025</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="page-journal" data-year="2025" data-journal-url="data/journal-2025.json" data-media-url="/api/media/2025">
+<div id="header-container"></div>
+<main style="display: flex;">
+    <section id="journal-section">
+        <aside id="toc-container">
+            <h2>Résumé des jours</h2>
+            <ul id="days-nav">
+            </ul>
+        </aside>
+        <section id="journal">
+            <h2>Événements du nichoir</h2>
+            <div id="journal-container">
+            </div>
+        </section>
+    </section>
+</main>
+
+
+<script src="js/script.js"></script>
+<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(header => {
+            document.getElementById('header-container').innerHTML = header;
+        })
+        .catch(error => console.error("Erreur lors du chargement du header :", error));
+</script>
+</body>
+</html>

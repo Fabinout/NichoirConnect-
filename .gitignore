@@ -1,2 +1,4 @@
 do not commit
 .env
+node_modules/
+public/data/medias/
