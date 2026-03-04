@@ -4,6 +4,7 @@ const path = require("path");
 const { refreshMediaCache, getMediaFromCache } = require("./cacheService");
 
 const app = express();
+app.disable('x-powered-by');
 const PORT = 3000;
 
 initializeServer();
